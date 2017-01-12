@@ -14,6 +14,13 @@ abstract class Model
         return $db->query($sql, [], static::class);
     }
 
+    public static function findOne($id)
+    {
+        $db = new Db();
+        $sql = 'SELECT * FROM ' . static::$table . ' WHERE id=:id';
+        return $db->query($sql, [':id' => $id], static::class)[0];
+    }
+
     public static function countAll()
     {
         $db = new Db();

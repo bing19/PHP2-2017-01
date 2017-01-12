@@ -29,4 +29,10 @@ class Db
         }
     }
 
+    public function execute($sql, $data = []): bool
+    {
+        $sth = $this->dbh->prepare($sql);
+        return $sth->execute($data);
+    }
+
 }
