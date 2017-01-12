@@ -14,7 +14,7 @@ abstract class Model
         return $db->query($sql, [], static::class);
     }
 
-    public static function findOne($id)
+    public static function findOneById($id)
     {
         $db = new Db();
         $sql = 'SELECT * FROM ' . static::$table . ' WHERE id=:id';
@@ -26,6 +26,25 @@ abstract class Model
         $db = new Db();
         $sql = 'SELECT COUNT(*) AS num FROM ' . static::$table;
         return (int)$db->query($sql, [], static::class)[0]->num;
+    }
+
+    public function update()
+    {
+        $sets = [];
+        $data = [];
+        foreach ($this as $key => $value) {
+            $data[':' . $key] = $value;
+            if ('id' == $key) {
+                continue;
+            }
+            $sets[] = $key . '=:' . $key;
+        }
+
+        $db = new Db();
+        $sql = 'UPDATE ' . static::$table . ' 
+        SET ' . implode(',', $sets) . ' 
+        WHERE id=:id';
+        return $db->execute($sql, $data);
     }
 
 }
