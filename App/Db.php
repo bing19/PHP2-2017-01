@@ -9,9 +9,10 @@ class Db
 
     public function __construct()
     {
-        $dsn = 'mysql:host=localhost;dbname=php2';
-        $user = 'root';
-        $password = '';
+        $config = new Config();
+        $dsn = 'mysql:host=localhost;dbname=' . $config->data['db']['dbname'];
+        $user = $config->data['db']['user'];
+        $password = $config->data['db']['password'];
         $this->dbh = new \PDO($dsn, $user, $password);
     }
 
@@ -33,6 +34,11 @@ class Db
     {
         $sth = $this->dbh->prepare($sql);
         return $sth->execute($data);
+    }
+
+    public function lastInsertId()
+    {
+        return $this->dbh->lastInsertId();
     }
 
 }

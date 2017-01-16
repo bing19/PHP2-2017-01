@@ -2,8 +2,8 @@
 
 require __DIR__ . '/autoload.php';
 
-$article = \App\Models\Article::findOneById(1);
-
+$article = new \App\Models\Article();
 $article->title = 'Тестовый заголовок';
+$article->insert();
 
-$article->update();
+var_dump($article);
