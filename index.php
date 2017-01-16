@@ -2,5 +2,8 @@
 
 require __DIR__ . '/autoload.php';
 
-$ordering = new \App\Ordering();
-$ordering->order(new \App\Models\Fruit());
+$view = new \App\View();
+$view->news = \App\Models\Article::findAll();
+echo $view->render(
+    __DIR__ . '/App/Templates/index.php'
+);
