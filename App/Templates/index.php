@@ -11,7 +11,11 @@
 
     <ul>
         <?php foreach ($news as $article) { ?>
-            <li><?php echo $article->title; ?></li>
+            <li>
+                <a href="/index.php?action=One&id=<?php echo $article->id; ?>">
+                    <?php echo $article->title; ?>
+                </a>
+            </li>
         <?php } ?>
     </ul>
 
