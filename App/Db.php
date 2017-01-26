@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Exceptions\DbException;
+
 class Db
 {
 
@@ -13,7 +15,11 @@ class Db
         $dsn = 'mysql:host=localhost;dbname=' . $config->data['db']['dbname'];
         $user = $config->data['db']['user'];
         $password = $config->data['db']['password'];
-        $this->dbh = new \PDO($dsn, $user, $password);
+        try {
+            $this->dbh = new \PDO($dsn, $user, $password);
+        } catch (\PDOException $e) {
+            throw new DbException($e->getMessage());
+        }
     }
 
     public function query($sql, $data = [], $class = null)
@@ -21,7 +27,7 @@ class Db
         $sth = $this->dbh->prepare($sql);
         $res = $sth->execute($data);
         if (false === $res) {
-            die('DB error in ' . $sql);
+            throw new \Exception('DB error in ' . $sql);
         }
         if (null === $class) {
             return $sth->fetchAll();
