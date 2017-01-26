@@ -2,14 +2,12 @@
 
 require __DIR__ . '/autoload.php';
 
-$parts = explode('/', $_SERVER['REQUEST_URI']);
-$controllerName = $parts[1] ?: 'Index';
-$actionName =     $parts[2] ?: 'Default';
-$controllerClass = '\\App\\Controllers\\' . $controllerName;
+$parts =  explode('/', $_SERVER['REQUEST_URI']);
 
-if (!class_exists($controllerClass)) {
-    die('Контроллер не найден');
-}
+$controllerName = ucfirst($parts[1]) ?: 'News';
+$controllerClassName = '\\App\\Controllers\\' . $controllerName;
 
-$controller = new $controllerClass;
+$actionName = ucfirst($parts[2]) ?: 'All';
+
+$controller = new $controllerClassName;
 $controller->action($actionName);

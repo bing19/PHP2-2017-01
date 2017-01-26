@@ -5,11 +5,11 @@ namespace App\Controllers;
 use App\Controller;
 use App\Models\Article;
 
-class Index
+class News
     extends Controller
 {
 
-    public function actionDefault()
+    public function actionAll()
     {
         $this->view->news = Article::findAll();
         echo $this->view->render(
