@@ -12,6 +12,9 @@ $actionName = ucfirst($parts[2]) ?: 'All';
 try  {
     $controller = new $controllerClassName;
     $controller->action($actionName);
+} catch (\App\Exceptions\E404Exception $e) {
+    header('Not found', true, 404);
+    echo 'Страница не найдена';
 } catch (Exception $e) {
     echo 'Возникла ошибка:' . $e->getMessage();
 }

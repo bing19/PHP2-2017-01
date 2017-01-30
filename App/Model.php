@@ -91,4 +91,29 @@ abstract class Model
         }
     }
 
+    public function fill(array $data)
+    {
+        $errors = new MultiException();
+
+        foreach ($data as $key => $value) {
+
+            // $key = 'title'
+            // $this->title = $value
+            // $validator = 'validateTitle'
+            $validator = 'validate' . ucfirst($key);
+            if (method_exists($this, $validator)) {
+                $res = $this->$validator($value);
+                if (false === $res) {
+                    $errors->add(new \Exception('Invalid ' . $key));
+                    continue;
+                }
+            }
+            $this->$key = $value;
+        }
+
+        if (!$errors->isEmpty()) {
+            throw $errors;
+        }
+    }
+
 }

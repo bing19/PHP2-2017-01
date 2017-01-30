@@ -13,4 +13,11 @@ class Article
     public $title;
     public $text;
 
+    protected function validateTitle($value) {
+        if (strlen($value) <=3 ) {
+            return false;
+        }
+        return true;
+    }
+
 }

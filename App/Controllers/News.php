@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controller;
+use App\Exceptions\E404Exception;
 use App\Models\Article;
 
 class News
@@ -19,7 +20,11 @@ class News
 
     public function actionOne()
     {
-        $this->view->article = Article::findOneById($_GET['id']);
+        $article = Article::findOneById($_GET['id']);
+        if (empty($article)) {
+            throw new E404Exception();
+        }
+        $this->view->article = $article;
         echo $this->view->render(
             __DIR__ . '/../Templates/article.php'
         );
