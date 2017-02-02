@@ -1,13 +1,9 @@
 <?php
 
-require __DIR__ . '/autoload.php';
+$x = 1;
+$y = -1;
 
-try {
-    $article = new \App\Models\Article();
-    $article->fill($_POST);
-    $article->save();
-} catch (\App\MultiException $errors) {
-    foreach ($errors as $error) {
-        echo $error->getMessage();
-    }
-}
+[$y, $x] = [$x, $y];
+
+var_dump($x);
+var_dump($y);
